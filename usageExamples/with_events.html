@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedded as div, with event handling</title>
+  </head>
+  <body>
+    <p >Voucher created event:<p id="voucher-created"></p> </p>
+    <p >Voucher creation failed: <p id="voucher-creation-failed"></p> </p>
+    <p >Voucher creation started: <p id="voucher-creation-started"></p> </p>
+    <div id="pw-voucher-widget"></div>
+    <!-- Remember to add your api key here -->
+    <script src="https://voucher-backend-gateway-96mgzln4.ew.gateway.dev/widget/latest?key=$API_KEY">
+    </script>
+  
+    <script>
+      window.onload = ()  => {
+        addListener()
+      }
+      function addListener() {
+        console.log("adding listener")
+        document.getElementById("pw-voucher-widget").addEventListener("voucher-created", (event) => {
+          document.getElementById("voucher-created").innerHTML = "<p>Received Event : " + JSON.stringify(event.detail) + "</p>"
+          console.log("Received event created ", event);
+          console.log("Details", event.detail);
+        });
+        document.getElementById("pw-voucher-widget").addEventListener("voucher-creation-failed", (event) => {
+          document.getElementById("voucher-creation-failed").innerHTML = "<p>Received Event : " + JSON.stringify(event.detail) + "</p>"
+          console.log("Received event creation failed ", event);
+          console.log("Details", event.detail);
+        });
+        document.getElementById("pw-voucher-widget").addEventListener("voucher-creation-started", (event) => {
+          document.getElementById("voucher-creation-started").innerHTML = "<p>Received Event : " + JSON.stringify(event.detail) + "</p>"
+          console.log("Started to create event ", event);
+          console.log("Details", event.detail);
+        })
+      }
+    </script>
+    
+  </body>
+</html>
